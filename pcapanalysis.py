@@ -1,7 +1,11 @@
 #def main ():
 ##	iterator()
 import re
-
+import sys
+import io
+#from StringIO import StringIO
+import os
+import scapy.all as scapy
 
 class Host:
 	#this is for identifying each host, their classification and it's behaviour
@@ -10,12 +14,12 @@ class Host:
 
 
 	def displayip(self):
-		print host.ip
+		print (host.ip)
 #also create an id for this
 
 
 class Stream:
-		def __init__(self, ip, host1id, host3id):
+	def __init__(self, ip, host1id, host3id):
 		self.ip = ip
 		self.host1id = host1id
 		self.host3id = host3id
@@ -44,21 +48,66 @@ class Stream:
 #maybe want to classify packets
 
 
-import os
-import scapy.all as scapy
+collectionofpcaps = []
+capture = io.StringIO()
+save_stdout = sys.stdout
+sys.stdout = capture
 
-def pcapanalyser(file):
+
+def captureparser(value, collectionofpcaps):
+
+	print (type(value))
+	collectionofpcaps.append(value)
+	return collectionofpcaps
+
+def pcapanalyser(file, collectionofpcaps):
 	os.chdir("/root/Desktop/mscdissforensics/pcaps/laredo-13.mit.edu/~brendan/regin/pcap")
 #	print file
 	a = scapy.rdpcap(file)
-#	a.show()
-	print(a)
+	b = a.show()
+	sys.stdout = save_stdout
+	print ("\n")
+	print ("\n")
+	print ("\n")
+	print ("\n")
+	value = capture.getvalue()
+	captureparser(value, collectionofpcaps)
+	return collectionofpcaps
+#	for line in b:
+#		print line
+#	print(a)
 #	print a
+
+#def 
 
 
 for file in os.listdir("/root/Desktop/mscdissforensics/pcaps/laredo-13.mit.edu/~brendan/regin/pcap"):
 	if file.endswith(".pcap"):
 #		print(file)
-		pcapanalyser(file)
-
-
+		pcapanalyser(file, collectionofpcaps)
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("value of pcap")
+print (collectionofpcaps[0])
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+print ("\n")
+c = len(collectionofpcaps)
+print(c)
+for elements in collectionofpcaps:
+	a = type(elements)
+	print(a)
+	b = len(elements)
+	print(b)
