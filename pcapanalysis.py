@@ -7,6 +7,8 @@ import io
 import os
 import scapy.all as scapy
 import dpkt
+import datetime
+import socket
 
 class Host:
 	#this is for identifying each host, their classification and it's behaviour
@@ -33,67 +35,68 @@ class Stream:
 
 
 
-#main()
-#from scapy import *
-#import scapy
-#from scapy import *
-
-
-#class hosts
-
-
-##maybe want to classify know friendly hosts
-
-
-#class packets
-#maybe want to classify packets
-
-
-collectionofpcaps = []
-capture = io.StringIO()
-save_stdout = sys.stdout
-sys.stdout = capture
-
-
-def captureparser(value, collectionofpcaps):
-
-	print (type(value))
-	collectionofpcaps.append(value)
-	return collectionofpcaps
-
-def pcapanalyser(file, collectionofpcaps):
+def pcapanalyser(file):
 	os.chdir("/root/Desktop/mscdissforensics/pcaps/laredo-13.mit.edu/~brendan/regin/pcap")
-#	print file
-	a = scapy.rdpcap(file)
-	b = a.show()
-	sys.stdout = save_stdout
-	print ("\n" * 4)
+	print
+	f = open(file)
+	print file
+	pcap = dpkt.pcap.Reader(f)
+#https://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/
+	for ts, buf in pcap:
+		eth=dpkt.ethernet.Ethernet(buf)
+#		print eth
+#		ip = eth.data
+#		tcp = ip.data
+#		print tcp.sport
+#		print tcp.dport
+    	eth = dpkt.ethernet.Ethernet(buf)
+    	ip = eth.data
+    	tcp = ip.data
+    	print tcp.dport
+    	try:
+	    	src = socket.inet_ntoa(ip.src)
+    	except:
+    		pass
+    	# Mac address
+    	src_mac = (eth.dst).encode("hex")
+    	dst_mac = (eth.src).encode("hex")
+    	smac = ':'.join([src_mac[i:i+2] for i in range(0, len(src_mac), 2)])
+    	dmac = ':'.join([dst_mac[i:i+2] for i in range(0, len(dst_mac), 2)])
 
-	value = capture.getvalue()
-	captureparser(value, collectionofpcaps)
-	return collectionofpcaps
-#	for line in b:
-#		print line
-#	print(a)
-#	print a
+    	# Packet
+    	ip = eth.data
+    	tcp = ip.data
+    	print ip.p
+    	try:
+	    	src = socket.inet_ntoa(ip.src)
+    	except:
+    		pass
+    	srcport = tcp.sport
+    	try:
+    		dst = socket.inet_ntoa(ip.dst)
+    	except:
+    		pass
+    	dstport = tcp.dport
+    	try:
+    		print dst
+    	except:
+    		print "dont work"
 
-#def 
+    		pass
 
+    	try:
+    		print "dont work"
+
+    		print src
+    	except:
+    		pass
+#    	if tcp.dport == 80 and len(tcp.data) > 0:
+#        	http = dpkt.http.Request(tcp.data)
+#        	print http.uri
+
+	f.close()
 
 for file in os.listdir("/root/Desktop/mscdissforensics/pcaps/laredo-13.mit.edu/~brendan/regin/pcap"):
 	if file.endswith(".pcap"):
-#		print(file)
-		pcapanalyser(file, collectionofpcaps)
-print ("\n" * 4)
-
-print ("value of pcap")
-print (collectionofpcaps[0])
-print ("\n" * 4)
-
-c = len(collectionofpcaps)
-print(c)
-for elements in collectionofpcaps:
-	a = type(elements)
-	print(a)
-	b = len(elements)
-	print(b)
+		print(file)
+		pcapanalyser(file)
