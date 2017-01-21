@@ -6,6 +6,7 @@ import io
 #from StringIO import StringIO
 import os
 import scapy.all as scapy
+import dpkt
 
 class Host:
 	#this is for identifying each host, their classification and it's behaviour
@@ -66,10 +67,8 @@ def pcapanalyser(file, collectionofpcaps):
 	a = scapy.rdpcap(file)
 	b = a.show()
 	sys.stdout = save_stdout
-	print ("\n")
-	print ("\n")
-	print ("\n")
-	print ("\n")
+	print ("\n" * 4)
+
 	value = capture.getvalue()
 	captureparser(value, collectionofpcaps)
 	return collectionofpcaps
@@ -85,25 +84,12 @@ for file in os.listdir("/root/Desktop/mscdissforensics/pcaps/laredo-13.mit.edu/~
 	if file.endswith(".pcap"):
 #		print(file)
 		pcapanalyser(file, collectionofpcaps)
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
+print ("\n" * 4)
+
 print ("value of pcap")
 print (collectionofpcaps[0])
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
-print ("\n")
+print ("\n" * 4)
+
 c = len(collectionofpcaps)
 print(c)
 for elements in collectionofpcaps:
