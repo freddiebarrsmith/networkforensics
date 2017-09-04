@@ -18,11 +18,11 @@ print "−Resources SHA256 : ", report.sha256
 print "−Resources MD5: ", report.md5
 print "−Resources status : ", report.status
 print "−Antivirus total : ", report.total
-print "−Antiviruss positives :", report.positives
+print "−Antivirus positives :", report.positives
 for antivirus , malware in report:
     if malware is not None :
       print
       print " Antivirus : " , antivirus[0]
-      print " Antivirus   version: " , antivirus[1]
-      print " Antivirus  update: " , antivirus[2]
+      print " Antivirus version: " , antivirus[1]
+      print " Antivirus update: " , antivirus[2]
       print "Malware: ", malware
