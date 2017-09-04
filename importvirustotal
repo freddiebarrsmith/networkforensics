@@ -1,0 +1,6 @@
+import virustotal
+APIKEY = "22c6d056f1e99b8fb4fa6c2a811178723735e9840de18fa2df83fccfd21c95ao"
+vtotal = virustotal.VirusTotal(APIKEY)
+
+vtReport = vTotal.get("66506e4e771c8b2fad384c7564b07ea6")
+
