@@ -1,24 +1,28 @@
-import virustotal
-APIKEY = "22c6d056f1e99b8fb4fa6c2a811178723735e9840de18fa2df83fccfd21c95ao"
-vtotal = virustotal.VirusTotal(APIKEY)
+# coding: utf-8
 
-vtReport = vTotal.get("66506e4e771c8b2fad384c7564b07ea6")
+import virustotal
+import urllib
+
+APIKEY = "6578e4386c6d850f55cbeaefd9f29fcf580f313378c794eca07bda6ec94596a8"
+vTotal = virustotal.VirusTotal(APIKEY)
+
+report = vTotal.get("66506e4e771c8b2fad384c7564b07ea6")
 
 # Query the report
 print "Report"
-print "−Resource ’ s  UID: " , report.id
-print "−Scan ’ s  UID: " , report.scan_id
+print "−Resources  UID: " , report.id
+print "−Scans UID: ", report.scan_id
 print "−Permalink : " , report.permalink
-print "−Resource’s SHA1 : " , report.sha1
-print "−Resource’s SHA256 : ", report.sha256
-print "−Resource’s MD5: ", report.md5
-print "−Resource’s status : ", report.status
-print "−Antivirus’ total : ", report.total
-print "−Antivirus’s positives :", report.positives
+print "−Resources SHA1 : " , report.sha1
+print "−Resources SHA256 : ", report.sha256
+print "−Resources MD5: ", report.md5
+print "−Resources status : ", report.status
+print "−Antivirus total : ", report.total
+print "−Antiviruss positives :", report.positives
 for antivirus , malware in report:
     if malware is not None :
       print
       print " Antivirus : " , antivirus[0]
-      print " Antivirus’   version: " , antivirus[1]
-      print " Antivirus’  update: " , antivirus[2]
+      print " Antivirus   version: " , antivirus[1]
+      print " Antivirus  update: " , antivirus[2]
       print "Malware: ", malware
