@@ -1,6 +1,8 @@
 
 #fuck these guys  and their piece of shit api, it doesn't even work with the sample code they've given on the site, morons
 
+#ignore above, turns out it's private api and i am the moron
+
 import requests
 #hash = "bork"
 #need to modify this piece of shit code to take parameters
